@@ -16,7 +16,8 @@ exports.postuuidtoapple = onNewTesterIosDevicePublished(
     secrets: [
       "APPLE_CONNECT_API_KEY_BASE64",
       "APPLE_CONNECT_PRIVATE_KEY_ISSUER_ID_BASE64",
-      "APPLE_CONNECT_PRIVATE_KEY_BASE64"
+      "APPLE_CONNECT_PRIVATE_KEY_BASE64",
+      "IOS_APP_INVITE_ENCRYPTION_KEY_BASE64"
     ]
   },
   async (event) => {
