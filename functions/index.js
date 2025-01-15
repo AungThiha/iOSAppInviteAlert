@@ -5,6 +5,7 @@ const {
   onNewTesterIosDevicePublished,
 } = require("firebase-functions/v2/alerts/appDistribution");
 const { registerUDID } = require("./apple/registerUDID");
+const { saveDeviceInfo } = require("./ios-app-access-automation/saveDeviceInfo");
 
 initializeApp();
 
@@ -35,10 +36,19 @@ exports.postuuidtoapple = onNewTesterIosDevicePublished(
   UDID **${testerDeviceIdentifier}** for ${testerDeviceModelName}
   `;
     info(message);
-    const testerNameApple = `${testerName} ${testerDeviceIdentifier.slice(-5)}`
+
+    /*const testerNameApple = `${testerName} ${testerDeviceIdentifier.slice(-5)}`
     const registerUDIDSuccess = registerUDID(
         testerNameApple, testerDeviceIdentifier
       );
+    if (!registerUDIDSuccess) { return; }*/
+
+    const saveDeviceInfoSuccess = saveDeviceInfo(
+        testerDeviceIdentifier,
+        testerDeviceModelName,
+        testerEmail
+      );
+
 });
 
 // exports.showMessage = onRequest(async (req, res) => {
