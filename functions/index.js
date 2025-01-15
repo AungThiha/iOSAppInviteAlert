@@ -1,6 +1,6 @@
 const { info } = require("firebase-functions/logger");
 const { initializeApp } = require("firebase-admin/app");
-// const { onRequest } = require("firebase-functions/v2/https");
+const { onRequest } = require("firebase-functions/v2/https");
 const {
   onNewTesterIosDevicePublished,
 } = require("firebase-functions/v2/alerts/appDistribution");
@@ -37,11 +37,11 @@ exports.postuuidtoapple = onNewTesterIosDevicePublished(
   `;
     info(message);
 
-    /*const testerNameApple = `${testerName} ${testerDeviceIdentifier.slice(-5)}`
+    const testerNameApple = `${testerName} ${testerDeviceIdentifier.slice(-5)}`
     const registerUDIDSuccess = registerUDID(
         testerNameApple, testerDeviceIdentifier
       );
-    if (!registerUDIDSuccess) { return; }*/
+    if (!registerUDIDSuccess) { return; }
 
     const saveDeviceInfoSuccess = saveDeviceInfo(
         testerDeviceIdentifier,
@@ -51,6 +51,35 @@ exports.postuuidtoapple = onNewTesterIosDevicePublished(
 
 });
 
-// exports.showMessage = onRequest(async (req, res) => {
-//   res.json({result: `just a message`});
-// });
+/*exports.registerUDIDCall = onRequest(
+  { 
+    secrets: [
+      "APPLE_CONNECT_API_KEY_BASE64",
+      "APPLE_CONNECT_PRIVATE_KEY_ISSUER_ID_BASE64",
+      "APPLE_CONNECT_PRIVATE_KEY_BASE64",
+      "IOS_APP_INVITE_ENCRYPTION_KEY_BASE64"
+    ]
+  },
+  async (req, res) => {
+    const registerUDIDSuccess = registerUDID(
+          "hello", "hey"
+        );
+    res.json({result: registerUDIDSuccess});
+  }
+);*/
+
+/*exports.saveDeviceInfoCall = onRequest(
+  { 
+    secrets: [
+      "IOS_APP_INVITE_ENCRYPTION_KEY_BASE64"
+    ]
+  },
+  async (req, res) => {
+    // const saveDeviceInfoSuccess = saveDeviceInfo(
+    //       "ffffffffffffffffffffffffffffffffffffffff",
+    //       "haha",
+    //       "hoo"
+    //     );
+    res.json({result: saveDeviceInfoSuccess});
+  }
+);*/

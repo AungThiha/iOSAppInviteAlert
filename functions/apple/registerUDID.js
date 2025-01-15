@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { generateJWT } = require("./generateJWT");
+const { generateJWT } = require("./generateJwt");
 
 const createDeviceRequest = (name, udid) => ({
   data: {
@@ -26,11 +26,11 @@ const registerUDID = async (name, udid) => {
       console.log('Device successfully registered to Apple');
       return true;
     } else {
-      console.error(`Error: ${response.status} - ${response.statusText}`);
+      console.log("Response from Apple Connect API:", response.data);
       return false;
     }
   } catch (error) {
-    console.error(`Error: ${error.response?.status || error.code} - ${error.response?.data || error.message}`);
+    console.error("Error registering device to Apple:", error.response ? error.response.data : error.message);
     return false;
   }
 };
