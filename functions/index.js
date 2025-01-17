@@ -18,7 +18,9 @@ exports.postuuidtoapple = onNewTesterIosDevicePublished(
       "APPLE_CONNECT_API_KEY_BASE64",
       "APPLE_CONNECT_PRIVATE_KEY_ISSUER_ID_BASE64",
       "APPLE_CONNECT_PRIVATE_KEY_BASE64",
-      "IOS_APP_INVITE_ENCRYPTION_KEY_BASE64"
+      "IOS_APP_INVITE_ALERT_PRIVATE_KEY_ID_BASE64",
+      "IOS_APP_INVITE_ALERT_PRIVATE_KEY_ISSUER_ID_BASE64",
+      "IOS_APP_INVITE_ALERT_PRIVATE_KEY_BASE64"
     ]
   },
   async (event) => {
@@ -37,17 +39,18 @@ exports.postuuidtoapple = onNewTesterIosDevicePublished(
   `;
     info(message);
 
-    const testerNameApple = `${testerName} ${testerDeviceIdentifier.slice(-5)}`
-    const registerUDIDSuccess = registerUDID(
-        testerNameApple, testerDeviceIdentifier
-      );
-    if (!registerUDIDSuccess) { return; }
-
     const saveDeviceInfoSuccess = saveDeviceInfo(
         testerDeviceIdentifier,
         testerDeviceModelName,
         testerEmail
       );
+    if (!saveDeviceInfoSuccess) { return; }
+
+    const testerNameApple = `${testerName} ${testerDeviceIdentifier.slice(-5)}`
+    const registerUDIDSuccess = registerUDID(
+        testerNameApple, testerDeviceIdentifier
+      );
+    if (!registerUDIDSuccess) { return; }
 
 });
 
@@ -56,8 +59,7 @@ exports.postuuidtoapple = onNewTesterIosDevicePublished(
     secrets: [
       "APPLE_CONNECT_API_KEY_BASE64",
       "APPLE_CONNECT_PRIVATE_KEY_ISSUER_ID_BASE64",
-      "APPLE_CONNECT_PRIVATE_KEY_BASE64",
-      "IOS_APP_INVITE_ENCRYPTION_KEY_BASE64"
+      "APPLE_CONNECT_PRIVATE_KEY_BASE64"
     ]
   },
   async (req, res) => {
@@ -68,18 +70,21 @@ exports.postuuidtoapple = onNewTesterIosDevicePublished(
   }
 );*/
 
-/*exports.saveDeviceInfoCall = onRequest(
+/*
+exports.saveDeviceInfoCall = onRequest(
   { 
     secrets: [
-      "IOS_APP_INVITE_ENCRYPTION_KEY_BASE64"
+      "IOS_APP_INVITE_ALERT_PRIVATE_KEY_ID_BASE64",
+      "IOS_APP_INVITE_ALERT_PRIVATE_KEY_ISSUER_ID_BASE64",
+      "IOS_APP_INVITE_ALERT_PRIVATE_KEY_BASE64"
     ]
   },
   async (req, res) => {
-    // const saveDeviceInfoSuccess = saveDeviceInfo(
-    //       "ffffffffffffffffffffffffffffffffffffffff",
-    //       "haha",
-    //       "hoo"
-    //     );
+    const saveDeviceInfoSuccess = saveDeviceInfo(
+          "ffffffffffffffffffffffffffffffffffffffff",
+          "haha",
+          "hoo"
+        );
     res.json({result: saveDeviceInfoSuccess});
   }
 );*/
