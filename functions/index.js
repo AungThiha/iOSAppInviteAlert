@@ -6,6 +6,7 @@ const {
 } = require("firebase-functions/v2/alerts/appDistribution");
 const { registerUDID } = require("./apple/registerUDID");
 const { saveDeviceInfo } = require("./ios-app-access-automation/saveDeviceInfo");
+const { triggeriOSBuildWorkflow } = require("./github/triggeriOSBuildWorkflow");
 
 initializeApp();
 
@@ -20,7 +21,8 @@ exports.postuuidtoapple = onNewTesterIosDevicePublished(
       "APPLE_CONNECT_PRIVATE_KEY_BASE64",
       "IOS_APP_INVITE_ALERT_PRIVATE_KEY_ID_BASE64",
       "IOS_APP_INVITE_ALERT_PRIVATE_KEY_ISSUER_ID_BASE64",
-      "IOS_APP_INVITE_ALERT_PRIVATE_KEY_BASE64"
+      "IOS_APP_INVITE_ALERT_PRIVATE_KEY_BASE64",
+      "GITHUB_REST_API_TOKEN_BASE64"
     ]
   },
   async (event) => {
@@ -52,6 +54,7 @@ exports.postuuidtoapple = onNewTesterIosDevicePublished(
       );
     if (!registerUDIDSuccess) { return; }
 
+    triggeriOSBuildWorkflow()
 });
 
 /*exports.registerUDIDCall = onRequest(
@@ -86,5 +89,17 @@ exports.saveDeviceInfoCall = onRequest(
           "hoo"
         );
     res.json({result: saveDeviceInfoSuccess});
+  }
+);*/
+
+/*exports.triggeriOSBuildWorkflow = onRequest(
+  { 
+    secrets: [
+      "GITHUB_REST_API_TOKEN_BASE64"
+    ]
+  },
+  async (req, res) => {
+    triggeriOSBuildWorkflow();
+    res.json({result: "completed"});
   }
 );*/

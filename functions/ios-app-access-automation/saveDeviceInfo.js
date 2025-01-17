@@ -28,7 +28,7 @@ const saveDeviceInfo = async (udid, deviceModel, email) => {
       return false;
     }
   } catch (error) {
-    console.error("Error device info:", error.response ? error.response.data : error.message);
+    console.error("Error from iosappaccessautomation:", error.response ? error.response.data : error.message);
     return false;
   }
 };
